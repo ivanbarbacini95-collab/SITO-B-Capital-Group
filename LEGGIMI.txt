@@ -1,0 +1,32 @@
+B CAPITAL GROUP — SITO WEB
+==========================
+
+CONTENUTO
+- index.html: pagina principale
+- style.css: layout e colori
+- script.js: menu, traduzione IT/EN, animazioni e foto CEO
+- assets/: loghi e icone
+
+COME APRIRLO
+1. Estrarre lo ZIP.
+2. Aprire "index.html" con Chrome, Safari o Edge.
+3. Pubblicazione: caricare TUTTI i file e la cartella assets/ nella root di GitHub Pages, Vercel o un normale hosting statico.
+   Non inserire cartelle doppie.
+
+COME AGGIUNGERE LA FOTO DEL CEO
+- Metodo DEFINITIVO, pubblico: inserire la tua fotografia nella cartella assets/ e chiamarla ESATTAMENTE "ivan-barbacini.jpg".
+  Il sito la mostrerà automaticamente a tutti nella sezione "Il fondatore".
+- Metodo ANTEPRIMA: cliccare su "Carica foto" all'interno del sito e scegliere la foto.
+  L'anteprima resterà visibile solo nel browser utilizzato e NON verrà pubblicata per gli altri visitatori.
+- Consigliato: ritratto verticale in JPG, minimo 900 x 1200 px, sguardo frontale, buona illuminazione.
+
+PERSONALIZZAZIONI
+- Cambiare testi nel file index.html e, per mantenere entrambe le lingue, aggiornare script.js > translations.
+- La sezione Contatti non mostra indirizzi o numeri inventati. Aggiungerli solo quando disponibili.
+- Font di Google: se sei offline, vengono usati font alternativi senza bloccare il sito.
+
+NOTE IMPORTANTI
+- Il sito è una proposta grafica e informativa; non include sistemi per ricevere denaro, aprire conti o inviare ordini.
+- Non vengono pubblicati rendimenti fittizi, AUM, licenze o autorizzazioni non documentate.
+- Prima della pubblicazione commerciale, verificare registrazione del marchio, status della società, autorizzazioni per eventuali servizi di gestione di patrimoni/crypto per conto terzi e privacy policy conforme per gli eventuali sistemi di contatto aggiunti.
+- Eventuali rendimenti non sono garantiti. Le crypto comportano rischio di perdita anche totale del capitale.
