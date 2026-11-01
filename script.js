@@ -34,7 +34,7 @@
       'treasury.error':'Connessione non disponibile · nuovo tentativo automatico',
       'treasury.note':'I valori comprendono soltanto INJ disponibili, in staking, in sblocco e reward non riscossi. Il P/L 24h è una stima dell’effetto della variazione di prezzo sui saldi correnti: non rappresenta il profitto effettivamente realizzato e non include flussi o altri asset. Se le fonti dati non sono disponibili, le cifre non vengono simulate.',
       'founder.label':'IL FONDATORE','founder.role':'FOUNDER & CEO','founder.portraitTag':'FOUNDER PROFILE','founder.photoPlaceholder':'IL TUO RITRATTO, QUI.','founder.photoNote':'CARICA UNA FOTO PER PERSONALIZZARE L’ANTEPRIMA','founder.upload':'Carica foto',
-      'founder.intro':'Classe 1995 · Nei mercati crypto dal 2017.',
+      'founder.intro':'Founder & CEO · Mercati crypto dal 2017.',
       'founder.skills.title':'COMPETENZE',
       'founder.skills.hint':'Scorri per esplorare',
       'founder.skill.investor':'Investitore',
@@ -92,7 +92,7 @@
       'treasury.error':'Connection unavailable · automatically retrying',
       'treasury.note':'Figures include only liquid INJ, staked INJ, unbonding INJ and unclaimed rewards. The 24h P/L estimates the effect of INJ market price movements on current holdings; it is not realized profit and does not account for cash flows or other assets. Values are never simulated if live sources are unavailable.',
       'founder.label':'THE FOUNDER','founder.role':'FOUNDER & CEO','founder.portraitTag':'FOUNDER PROFILE','founder.photoPlaceholder':'YOUR PORTRAIT GOES HERE.','founder.photoNote':'UPLOAD A PHOTO TO CUSTOMIZE THIS PREVIEW','founder.upload':'Upload photo',
-      'founder.intro':'Born in 1995 · Active in crypto markets since 2017.',
+      'founder.intro':'Founder & CEO · Active in crypto markets since 2017.',
       'founder.skills.title':'EXPERTISE',
       'founder.skills.hint':'Drag to explore',
       'founder.skill.investor':'Investor',
@@ -171,59 +171,105 @@
   function initFounderSkills() {
     const viewport = $('#founderSkills');
     const track = $('#founderSkillTrack');
-    if (!viewport || !track) return;
-    const first = track.querySelector('.founder-skill-set');
-    if (!first) return;
+    const first = $('#founderSkillSet');
+    if (!viewport || !track || !first) return;
+
+    // One semantic set in HTML; the two hidden clones allow seamless
+    // looping without duplicated lists in the page layout.
+    const before = first.cloneNode(true);
+    const after = first.cloneNode(true);
+    [before, after].forEach(clone => {
+      clone.removeAttribute('id');
+      clone.setAttribute('aria-hidden','true');
+      clone.inert = true;
+    });
+    track.replaceChildren(before, first, after);
+
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    let span=0, offset=0, previousTime=0, pointerId=null, lastX=0;
-    let visible=true;
-    const speed=29; // pixels per second, right-to-left
-    const normalize=() => {
-      if (span<=0) return;
-      offset=((offset % span)+span)%span-span;
-    };
-    const paint=() => { track.style.transform='translate3d('+offset.toFixed(2)+'px,0,0)'; };
-    const measure=() => { span=first.getBoundingClientRect().width; normalize(); paint(); };
-    const onPointerEnd=(event) => {
-      if (event.pointerId!==pointerId) return;
-      if (viewport.hasPointerCapture?.(event.pointerId)) viewport.releasePointerCapture(event.pointerId);
-      pointerId=null;
+    let width = 0;
+    let offset = 0;
+    let previousTime = 0;
+    let pointerId = null;
+    let lastX = 0;
+    let visible = true;
+    const speed = 30;
+
+    function normalize() {
+      if (!width) return;
+      while (offset <= -2 * width) offset += width;
+      while (offset > -width) offset -= width;
+    }
+    function paint() {
+      track.style.transform = 'translate3d(' + offset.toFixed(2) + 'px,0,0)';
+    }
+    function measure() {
+      const priorWidth = width;
+      const priorPhase = priorWidth ? ((-offset - priorWidth) / priorWidth) : 0;
+      width = first.getBoundingClientRect().width;
+      if (!width) return;
+      offset = -width * (1 + (priorPhase % 1 + 1) % 1);
+      normalize();
+      paint();
+    }
+    function stopDrag(event) {
+      if (event.pointerId !== pointerId) return;
+      pointerId = null;
       viewport.classList.remove('is-dragging');
-    };
-    viewport.addEventListener('pointerdown',event=>{
-      if (event.pointerType==='mouse' && event.button!==0) return;
-      pointerId=event.pointerId; lastX=event.clientX;
+      if (viewport.hasPointerCapture?.(event.pointerId)) {
+        viewport.releasePointerCapture(event.pointerId);
+      }
+    }
+    viewport.addEventListener('pointerdown', event => {
+      if (event.pointerType === 'mouse' && event.button !== 0) return;
+      pointerId = event.pointerId;
+      lastX = event.clientX;
       viewport.setPointerCapture?.(event.pointerId);
       viewport.classList.add('is-dragging');
     });
-    viewport.addEventListener('pointermove',event=>{
-      if (event.pointerId!==pointerId) return;
-      offset+=event.clientX-lastX; lastX=event.clientX;
-      normalize(); paint();
+    viewport.addEventListener('pointermove', event => {
+      if (event.pointerId !== pointerId) return;
+      offset += event.clientX - lastX;
+      lastX = event.clientX;
+      normalize();
+      paint();
     });
-    viewport.addEventListener('pointerup',onPointerEnd);
-    viewport.addEventListener('pointercancel',onPointerEnd);
-    viewport.addEventListener('lostpointercapture',()=>{pointerId=null;viewport.classList.remove('is-dragging');});
-    viewport.addEventListener('keydown',event=>{
-      if (event.key!=='ArrowLeft' && event.key!=='ArrowRight') return;
+    viewport.addEventListener('pointerup', stopDrag);
+    viewport.addEventListener('pointercancel', stopDrag);
+    viewport.addEventListener('lostpointercapture', () => {
+      pointerId = null;
+      viewport.classList.remove('is-dragging');
+    });
+    viewport.addEventListener('keydown', event => {
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
       event.preventDefault();
-      offset+=event.key==='ArrowLeft'?48:-48;normalize();paint();
+      offset += event.key === 'ArrowLeft' ? 45 : -45;
+      normalize();
+      paint();
     });
-    document.addEventListener('bcg:language',event=>{
-      viewport.setAttribute('aria-label',event.detail.lang==='en'?'Founder expertise, drag to explore':'Competenze del fondatore, trascina per scorrere');
+    document.addEventListener('bcg:language', event => {
+      viewport.setAttribute('aria-label', event.detail.lang === 'en'
+        ? 'Founder expertise, drag to explore'
+        : 'Competenze del fondatore, trascina per scorrere');
     });
     if ('IntersectionObserver' in window) {
-      new IntersectionObserver(entries=>{visible=entries[0]?.isIntersecting??true;},{threshold:0}).observe(viewport);
+      new IntersectionObserver(entries => {
+        visible = entries.some(entry => entry.isIntersecting);
+      }).observe(viewport);
     }
-    window.addEventListener('resize',measure,{passive:true});
-    const tick=time=>{
-      const elapsed=previousTime?Math.min(time-previousTime,64):0;
-      previousTime=time;
-      if (visible && !document.hidden && pointerId===null && !reducedMotion.matches && span>0) {
-        offset-=speed*elapsed/1000;normalize();paint();
+    window.addEventListener('resize', measure, {passive:true});
+    document.addEventListener('visibilitychange', () => { previousTime = 0; });
+
+    function tick(time) {
+      const elapsed = previousTime ? Math.min(time-previousTime,64) : 0;
+      previousTime = time;
+      if (visible && !document.hidden && pointerId === null
+          && !reducedMotion.matches && width > 0) {
+        offset -= speed * elapsed / 1000;
+        normalize();
+        paint();
       }
       requestAnimationFrame(tick);
-    };
+    }
     measure();
     requestAnimationFrame(tick);
   }
