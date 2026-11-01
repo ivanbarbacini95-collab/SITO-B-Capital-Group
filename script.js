@@ -34,9 +34,23 @@
       'treasury.error':'Connessione non disponibile · nuovo tentativo automatico',
       'treasury.note':'I valori comprendono soltanto INJ disponibili, in staking, in sblocco e reward non riscossi. Il P/L 24h è una stima dell’effetto della variazione di prezzo sui saldi correnti: non rappresenta il profitto effettivamente realizzato e non include flussi o altri asset. Se le fonti dati non sono disponibili, le cifre non vengono simulate.',
       'founder.label':'IL FONDATORE','founder.role':'FOUNDER & CEO','founder.portraitTag':'FOUNDER PROFILE','founder.photoPlaceholder':'IL TUO RITRATTO, QUI.','founder.photoNote':'CARICA UNA FOTO PER PERSONALIZZARE L’ANTEPRIMA','founder.upload':'Carica foto',
-      'founder.intro':'Classe 1995 · Mercati crypto dal 2017 · Founder & CEO.',
-      'founder.story':'Fondatore di B Capital Group e ideatore di INJ Node, si occupa di analisi degli asset digitali e strumenti per il monitoraggio di Injective.',
-      'founder.mission':'Il suo approccio: visione di lungo periodo, disciplina e attenzione al rischio.',
+      'founder.intro':'Classe 1995 · Nei mercati crypto dal 2017.',
+      'founder.skills.title':'COMPETENZE',
+      'founder.skills.hint':'Scorri per esplorare',
+      'founder.skill.investor':'Investitore',
+      'founder.skill.investor.desc':'Mercati crypto dal 2017',
+      'founder.skill.onchain':'Analisi on-chain',
+      'founder.skill.onchain.desc':'Dati di rete, wallet e flussi',
+      'founder.skill.defi':'DeFi',
+      'founder.skill.defi.desc':'Protocolli e finanza decentralizzata',
+      'founder.skill.staking':'Staking',
+      'founder.skill.staking.desc':'Ricompense, validatori e reti PoS',
+      'founder.skill.research':'Ricerca crypto',
+      'founder.skill.research.desc':'Mercati e asset digitali',
+      'founder.skill.risk':'Gestione del rischio',
+      'founder.skill.risk.desc':'Disciplina e controllo dell\'esposizione',
+      'founder.skill.tracking':'Portfolio tracking',
+      'founder.skill.tracking.desc':'Monitoraggio del capitale con INJ Node',
       'founder.signature':'FONDATORE & CEO · B CAPITAL GROUP',
       'manifesto.label':'IL NOSTRO PRINCIPIO','manifesto.quote':'Il profitto è un obiettivo.<br/><em>Il metodo è ciò che ci guida.</em>',
       'manifesto.body':'Ricerca, pazienza e controllo del rischio sono la base di ogni decisione. Nessuna promessa di guadagno: solo la volontà di costruire strategie fondate su un processo consapevole.',
@@ -78,9 +92,23 @@
       'treasury.error':'Connection unavailable · automatically retrying',
       'treasury.note':'Figures include only liquid INJ, staked INJ, unbonding INJ and unclaimed rewards. The 24h P/L estimates the effect of INJ market price movements on current holdings; it is not realized profit and does not account for cash flows or other assets. Values are never simulated if live sources are unavailable.',
       'founder.label':'THE FOUNDER','founder.role':'FOUNDER & CEO','founder.portraitTag':'FOUNDER PROFILE','founder.photoPlaceholder':'YOUR PORTRAIT GOES HERE.','founder.photoNote':'UPLOAD A PHOTO TO CUSTOMIZE THIS PREVIEW','founder.upload':'Upload photo',
-      'founder.intro':'Born in 1995 · Active in crypto markets since 2017 · Founder & CEO.',
-      'founder.story':'Founder of B Capital Group and creator of INJ Node, focused on digital-asset research and tools for tracking Injective.',
-      'founder.mission':'His approach: long-term thinking, discipline and risk awareness.',
+      'founder.intro':'Born in 1995 · Active in crypto markets since 2017.',
+      'founder.skills.title':'EXPERTISE',
+      'founder.skills.hint':'Drag to explore',
+      'founder.skill.investor':'Investor',
+      'founder.skill.investor.desc':'In crypto markets since 2017',
+      'founder.skill.onchain':'On-chain analysis',
+      'founder.skill.onchain.desc':'Network data, wallets and flows',
+      'founder.skill.defi':'DeFi',
+      'founder.skill.defi.desc':'Decentralized-finance protocols',
+      'founder.skill.staking':'Staking',
+      'founder.skill.staking.desc':'Rewards, validators and PoS networks',
+      'founder.skill.research':'Crypto research',
+      'founder.skill.research.desc':'Markets and digital assets',
+      'founder.skill.risk':'Risk management',
+      'founder.skill.risk.desc':'Discipline and exposure control',
+      'founder.skill.tracking':'Portfolio tracking',
+      'founder.skill.tracking.desc':'Capital monitoring with INJ Node',
       'founder.signature':'FOUNDER & CEO · B CAPITAL GROUP',
       'manifesto.label':'OUR GUIDING PRINCIPLE','manifesto.quote':'Profit is the objective.<br/><em>Method is the guide.</em>',
       'manifesto.body':'Research, patience, and risk management underpin every decision. We make no promises of guaranteed returns — only a commitment to building strategies through a considered process.',
@@ -140,5 +168,65 @@
     const navObserver = new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+entry.target.id));}}),{rootMargin:'-30% 0px -60% 0px'});
     sections.forEach(el=>navObserver.observe(el));
   }
+  function initFounderSkills() {
+    const viewport = $('#founderSkills');
+    const track = $('#founderSkillTrack');
+    if (!viewport || !track) return;
+    const first = track.querySelector('.founder-skill-set');
+    if (!first) return;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let span=0, offset=0, previousTime=0, pointerId=null, lastX=0;
+    let visible=true;
+    const speed=29; // pixels per second, right-to-left
+    const normalize=() => {
+      if (span<=0) return;
+      offset=((offset % span)+span)%span-span;
+    };
+    const paint=() => { track.style.transform='translate3d('+offset.toFixed(2)+'px,0,0)'; };
+    const measure=() => { span=first.getBoundingClientRect().width; normalize(); paint(); };
+    const onPointerEnd=(event) => {
+      if (event.pointerId!==pointerId) return;
+      if (viewport.hasPointerCapture?.(event.pointerId)) viewport.releasePointerCapture(event.pointerId);
+      pointerId=null;
+      viewport.classList.remove('is-dragging');
+    };
+    viewport.addEventListener('pointerdown',event=>{
+      if (event.pointerType==='mouse' && event.button!==0) return;
+      pointerId=event.pointerId; lastX=event.clientX;
+      viewport.setPointerCapture?.(event.pointerId);
+      viewport.classList.add('is-dragging');
+    });
+    viewport.addEventListener('pointermove',event=>{
+      if (event.pointerId!==pointerId) return;
+      offset+=event.clientX-lastX; lastX=event.clientX;
+      normalize(); paint();
+    });
+    viewport.addEventListener('pointerup',onPointerEnd);
+    viewport.addEventListener('pointercancel',onPointerEnd);
+    viewport.addEventListener('lostpointercapture',()=>{pointerId=null;viewport.classList.remove('is-dragging');});
+    viewport.addEventListener('keydown',event=>{
+      if (event.key!=='ArrowLeft' && event.key!=='ArrowRight') return;
+      event.preventDefault();
+      offset+=event.key==='ArrowLeft'?48:-48;normalize();paint();
+    });
+    document.addEventListener('bcg:language',event=>{
+      viewport.setAttribute('aria-label',event.detail.lang==='en'?'Founder expertise, drag to explore':'Competenze del fondatore, trascina per scorrere');
+    });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(entries=>{visible=entries[0]?.isIntersecting??true;},{threshold:0}).observe(viewport);
+    }
+    window.addEventListener('resize',measure,{passive:true});
+    const tick=time=>{
+      const elapsed=previousTime?Math.min(time-previousTime,64):0;
+      previousTime=time;
+      if (visible && !document.hidden && pointerId===null && !reducedMotion.matches && span>0) {
+        offset-=speed*elapsed/1000;normalize();paint();
+      }
+      requestAnimationFrame(tick);
+    };
+    measure();
+    requestAnimationFrame(tick);
+  }
+  initFounderSkills();
   $('#year').textContent=new Date().getFullYear();
 })();
