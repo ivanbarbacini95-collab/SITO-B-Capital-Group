@@ -160,3 +160,66 @@
 @media(prefers-reduced-motion:reduce) {
   .bcg-digit-up,.bcg-digit-down {animation:none;}
 }
+
+
+/* v5: use the complete, padded brand mark in the hero. */
+.hero .hero-art {overflow:visible; padding-inline:22px;}
+.hero .hero-art-inner.hero-art-transparent {
+  width:100%; max-width:550px; padding:18px 20px;
+  overflow:visible;
+}
+.hero .hero-art .hero-monogram {
+  width:min(100%,400px); height:auto; max-width:100%;
+  object-fit:contain; object-position:center;
+}
+@media(max-width:760px) {
+  .hero .hero-art {overflow:visible; padding:12px 10px 30px;}
+  .hero .hero-art-inner.hero-art-transparent {padding:10px 16px 16px;}
+  .hero .hero-art .hero-monogram {width:min(78vw,320px);}
+}
+@media(max-width:390px) {
+  .hero .hero-art {padding-inline:7px;}
+  .hero .hero-art .hero-monogram {width:min(78vw,290px);}
+}
+
+/* Founder skills: compact continuous moving cards, with finger/mouse drag. */
+.founder-skills-heading {
+  display:flex; align-items:baseline; justify-content:space-between;
+  gap:16px; margin:24px 0 15px;
+}
+.founder-skills-heading>span {font-size:10px;font-weight:700;letter-spacing:.18em;color:#d6bb8b;}
+.founder-skills-heading>small {font-size:10px;color:#858b96;letter-spacing:.015em;}
+.founder-skills {
+  position:relative; width:100%; overflow:hidden; min-width:0;
+  touch-action:pan-y; cursor:grab; user-select:none; -webkit-user-select:none;
+  padding:3px 0 8px;
+  mask-image:linear-gradient(to right,transparent 0%,#000 4%,#000 96%,transparent 100%);
+}
+.founder-skills.is-dragging {cursor:grabbing;}
+.founder-skills:focus-visible {outline:1px solid #c7a66a;outline-offset:4px;}
+.founder-skill-track {display:flex; width:max-content; will-change:transform;}
+.founder-skill-set {display:flex; align-items:stretch; gap:12px; padding-right:12px;flex:none;}
+.founder-skill-card {
+  width:clamp(176px,17vw,210px); min-height:138px; flex:none;
+  display:flex; flex-direction:column; align-items:flex-start;
+  padding:17px 16px 18px; border-radius:12px;
+  border:1px solid rgba(213,180,120,.23);
+  background:linear-gradient(140deg,rgba(205,162,91,.075),rgba(13,18,26,.96) 52%);
+}
+.founder-skill-index {font-size:10px;color:#887555;letter-spacing:.12em;margin-bottom:17px;}
+.founder-skill-card strong {
+  display:block; color:#e7e1d6; font-size:15px; font-weight:600;
+  line-height:1.35; letter-spacing:-.01em;
+}
+.founder-skill-card>span:last-child {
+  color:#a1a7b1; font-size:11px; line-height:1.55; margin-top:8px;
+}
+.founder-copy .founder-intro {margin:0 0 10px;font-weight:500;}
+.founder-copy .founder-sign {margin-top:26px;}
+@media(max-width:760px) {
+  .founder-skill-card {width:180px;min-height:133px;padding:15px;}
+  .founder-skills-heading {margin-top:23px;}
+}
+@media(prefers-reduced-motion:reduce) {
+  .founder-skill-track {will-change:auto;}
+}
