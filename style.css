@@ -223,3 +223,90 @@
 @media(prefers-reduced-motion:reduce) {
   .founder-skill-track {will-change:auto;}
 }
+
+
+/* v6: fully contained logo with its opaque black raster background
+   blended away over the real hero gradient; no surrounding black square. */
+.hero .hero-art {overflow:visible; padding-inline:clamp(16px,4vw,32px);}
+.hero .hero-art-inner.hero-art-transparent {
+  background:transparent; border:none; box-shadow:none; overflow:visible;
+  width:100%; max-width:540px; padding:15px 10px;
+}
+.hero .hero-art .hero-monogram {
+  display:block;
+  width:min(100%,385px);
+  max-width:100%;
+  height:auto;
+  object-fit:contain;
+  mix-blend-mode:screen;
+  background:transparent;
+  filter:none;
+}
+@media(max-width:760px) {
+  .hero .hero-art {padding:14px 15px 28px; overflow:visible;}
+  .hero .hero-art-inner.hero-art-transparent {max-width:420px; padding:7px 4px 15px;}
+  .hero .hero-art .hero-monogram {width:min(76vw,305px);}
+}
+
+/* v6: force the founder expertise into one clipped, horizontally moving row.
+   The repeated elements are created and hidden from assistive tech by JS. */
+.founder .founder-copy {min-width:0;}
+.founder .founder-skills {
+  display:block;
+  position:relative;
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  overflow:hidden;
+  padding:6px 0 12px;
+  touch-action:pan-y;
+  user-select:none;
+  -webkit-user-select:none;
+  cursor:grab;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);
+}
+.founder .founder-skills.is-dragging {cursor:grabbing;}
+.founder .founder-skill-track {
+  display:flex;
+  flex-flow:row nowrap;
+  align-items:stretch;
+  width:max-content;
+  max-width:none;
+  will-change:transform;
+}
+.founder .founder-skill-set {
+  display:flex;
+  flex-flow:row nowrap;
+  flex:none;
+  width:max-content;
+  align-items:stretch;
+  gap:12px;
+  padding-right:12px;
+}
+.founder .founder-skill-card {
+  flex:0 0 195px;
+  display:flex;
+  flex-flow:column nowrap;
+  width:195px;
+  min-width:195px;
+  max-width:195px;
+  min-height:135px;
+  white-space:normal;
+  border:1px solid rgba(213,180,120,.25);
+  border-radius:13px;
+  padding:16px;
+  background:linear-gradient(140deg,rgba(205,162,91,.095),rgba(13,18,26,.96) 56%);
+}
+.founder .founder-skill-card strong {font-size:15px;line-height:1.35;}
+.founder .founder-skill-card>span:last-child {font-size:11px;line-height:1.55;}
+@media(max-width:760px) {
+  .founder .founder-skills {width:100%;max-width:100%;}
+  .founder .founder-skill-card {
+    flex-basis:180px;width:180px;min-width:180px;max-width:180px;
+    min-height:134px;padding:14px;
+  }
+}
+@media(prefers-reduced-motion:reduce) {
+  .founder .founder-skill-track {will-change:auto;}
+}
