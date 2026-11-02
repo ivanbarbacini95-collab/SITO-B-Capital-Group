@@ -310,3 +310,31 @@
 @media(prefers-reduced-motion:reduce) {
   .founder .founder-skill-track {will-change:auto;}
 }
+
+/* 2026-11-02 · B Capital Group brand: full, uncropped logo on true black. */
+:root { --bg:#000000; --black:#000000; }
+html, body { background:#000000; }
+.site-header, .site-header.scrolled { background:rgba(0,0,0,.95); }
+.hero { background:#000000!important; }
+.hero::before, .hero-glow { display:none!important; }
+.hero .hero-art {
+  width:100%; min-width:0; padding:20px 0 30px; overflow:visible;
+}
+.hero .hero-art-inner.hero-art-transparent {
+  width:100%; max-width:630px; aspect-ratio:auto; height:auto; margin:0 auto;
+  padding:0!important; gap:0; border:0!important; border-radius:0!important;
+  background:transparent!important; box-shadow:none!important; overflow:visible!important;
+}
+.hero .hero-art-inner.hero-art-transparent::before,
+.hero .hero-art-inner.hero-art-transparent::after { content:none!important; display:none!important; }
+.hero .hero-art .hero-monogram {
+  display:block; position:static; width:100%; max-width:560px; height:auto;
+  margin:0 auto; object-fit:contain; object-position:center;
+  background:transparent!important; border:0!important; border-radius:0!important;
+  mix-blend-mode:normal!important; filter:none!important;
+}
+@media(max-width:760px) {
+  .hero .hero-art { padding:12px 0 24px; overflow:visible; }
+  .hero .hero-art-inner.hero-art-transparent { max-width:440px; padding:0!important; }
+  .hero .hero-art .hero-monogram { width:100%; max-width:400px; }
+}
