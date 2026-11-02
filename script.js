@@ -35,7 +35,7 @@
       'treasury.note':'I valori comprendono soltanto INJ disponibili, in staking, in sblocco e reward non riscossi. Il P/L 24h è una stima dell’effetto della variazione di prezzo sui saldi correnti: non rappresenta il profitto effettivamente realizzato e non include flussi o altri asset. Se le fonti dati non sono disponibili, le cifre non vengono simulate.',
       'founder.label':'IL FONDATORE','founder.role':'FOUNDER & CEO','founder.portraitTag':'FOUNDER PROFILE','founder.photoPlaceholder':'IL TUO RITRATTO, QUI.','founder.photoNote':'CARICA UNA FOTO PER PERSONALIZZARE L’ANTEPRIMA','founder.upload':'Carica foto',
       'founder.intro':'Founder & CEO · Mercati crypto dal 2017.',
-      'founder.skills.title':'COMPETENZE',
+      'founder.skills.title':'COMPETENZE','founder.crypto.title':'ECOSISTEMA CRYPTO',
       'founder.skills.hint':'Scorri per esplorare',
       'founder.skill.investor':'Investitore',
       'founder.skill.investor.desc':'Mercati crypto dal 2017',
@@ -93,7 +93,7 @@
       'treasury.note':'Figures include only liquid INJ, staked INJ, unbonding INJ and unclaimed rewards. The 24h P/L estimates the effect of INJ market price movements on current holdings; it is not realized profit and does not account for cash flows or other assets. Values are never simulated if live sources are unavailable.',
       'founder.label':'THE FOUNDER','founder.role':'FOUNDER & CEO','founder.portraitTag':'FOUNDER PROFILE','founder.photoPlaceholder':'YOUR PORTRAIT GOES HERE.','founder.photoNote':'UPLOAD A PHOTO TO CUSTOMIZE THIS PREVIEW','founder.upload':'Upload photo',
       'founder.intro':'Founder & CEO · Active in crypto markets since 2017.',
-      'founder.skills.title':'EXPERTISE',
+      'founder.skills.title':'EXPERTISE','founder.crypto.title':'CRYPTO ECOSYSTEM',
       'founder.skills.hint':'Drag to explore',
       'founder.skill.investor':'Investor',
       'founder.skill.investor.desc':'In crypto markets since 2017',
@@ -274,5 +274,19 @@
     requestAnimationFrame(tick);
   }
   initFounderSkills();
+  function initCryptoTicker() {
+    const track = $('#cryptoTickerTrack');
+    const first = $('#cryptoTickerSet');
+    if (!track || !first || track.classList.contains('is-ready')) return;
+    // One accessible copy, followed by a hidden clone of equal width.
+    const duplicate = first.cloneNode(true);
+    duplicate.removeAttribute('id');
+    duplicate.setAttribute('aria-hidden', 'true');
+    duplicate.inert = true;
+    track.appendChild(duplicate);
+    track.classList.add('is-ready');
+  }
+  initCryptoTicker();
+
   $('#year').textContent=new Date().getFullYear();
 })();
