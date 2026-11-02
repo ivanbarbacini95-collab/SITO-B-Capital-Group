@@ -338,3 +338,10 @@ html, body { background:#000000; }
   .hero .hero-art-inner.hero-art-transparent { max-width:440px; padding:0!important; }
   .hero .hero-art .hero-monogram { width:100%; max-width:400px; }
 }
+
+/* B Capital Group · direct link to the official INJ Node application */
+.product-open-link{align-self:flex-start;display:inline-flex;align-items:center;justify-content:center;gap:24px;min-height:46px;margin-top:27px;padding:0 22px;border:1px solid rgba(213,180,120,.52);border-radius:4px;background:rgba(213,180,120,.07);color:#e9d3a5;font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.075em;text-decoration:none;transition:background .2s ease,border-color .2s ease,transform .2s ease,color .2s ease;}
+.product-open-link:hover{background:rgba(213,180,120,.17);border-color:#d5b478;color:#fff;transform:translateY(-2px);}
+.product-open-link:focus-visible{outline:2px solid #e3c68d;outline-offset:4px;}
+.product-open-arrow{font-size:17px;line-height:1;}
+@media(max-width:760px){.product-open-link{margin-top:24px;min-height:48px;padding-inline:20px;}}
