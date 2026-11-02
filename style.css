@@ -345,3 +345,19 @@ html, body { background:#000000; }
 .product-open-link:focus-visible{outline:2px solid #e3c68d;outline-offset:4px;}
 .product-open-arrow{font-size:17px;line-height:1;}
 @media(max-width:760px){.product-open-link{margin-top:24px;min-height:48px;padding-inline:20px;}}
+
+/* CEO portrait monochrome + reverse crypto ticker */
+.founder .portrait-photo{filter:grayscale(1) contrast(1.09) brightness(.96);-webkit-filter:grayscale(1) contrast(1.09) brightness(.96);}
+.founder .crypto-ticker-heading{margin:24px 0 12px;color:#d6bb8b;font-size:10px;font-weight:700;letter-spacing:.18em;}
+.founder .crypto-ticker{position:relative;width:100%;max-width:100%;overflow:hidden;min-width:0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);}
+.founder .crypto-ticker-track{display:flex;width:max-content;align-items:center;flex-flow:row nowrap;}
+.founder .crypto-ticker-track.is-ready{animation:bcg-crypto-reverse 32s linear infinite;}
+.founder .crypto-ticker-set{display:flex;align-items:center;flex:none;gap:20px;width:max-content;padding-right:20px;white-space:nowrap;}
+.founder .crypto-ticker-item{display:flex;align-items:center;gap:9px;flex:none;padding:12px 0;color:#e8e4dd;font-size:12px;font-weight:600;letter-spacing:.015em;}
+.founder .crypto-ticker-item img{display:block;width:28px;height:28px;object-fit:contain;flex:none;}
+.founder .crypto-ticker-item small{color:#8f958f;font-size:10px;font-weight:500;letter-spacing:.09em;}
+.founder .crypto-ticker-item::after{content:"·";margin-left:12px;color:#726247;font-size:18px;}
+.founder .crypto-ticker:hover .crypto-ticker-track,.founder .crypto-ticker:focus-within .crypto-ticker-track{animation-play-state:paused;}
+@keyframes bcg-crypto-reverse{from{transform:translate3d(-50%,0,0);}to{transform:translate3d(0,0,0);}}
+@media(max-width:760px){.founder .crypto-ticker-heading{margin-top:20px;}.founder .crypto-ticker-set{gap:14px;padding-right:14px;}.founder .crypto-ticker-item{gap:8px;font-size:11px;}.founder .crypto-ticker-item img{width:25px;height:25px;}.founder .crypto-ticker-item::after{margin-left:8px;}}
+@media(prefers-reduced-motion:reduce){.founder .crypto-ticker-track.is-ready{animation:none;}.founder .crypto-ticker{-webkit-mask-image:none;mask-image:none;overflow-x:auto;}}
